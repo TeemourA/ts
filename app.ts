@@ -1,6 +1,10 @@
-const add = (n1: number, n2: number) => n1 + n2;
+const combine = (input1: number | string, input2: number | string) => {
+  const result = input1 + input2;
+  return result;
+};
 
-const number1 = 5;
-const number2 = 2.8;
+const combinedAges = combine(36, 20);
 
-console.log(add(number1, number2));
+console.log(combinedAges);
+
+const combinedNames = combine('T', 'I');
