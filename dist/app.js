@@ -1,7 +1,8 @@
+"use strict";
 var userInput;
 var userName;
 userInput = 2;
-userInput = '22';
+userInput = '2';
 if (userInput === 'string') {
     userName = userInput;
 }
