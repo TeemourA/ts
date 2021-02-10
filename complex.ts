@@ -23,7 +23,7 @@ const person = {
   name: 'Tim',
   age: 25,
   hobbies: ['Sports', 'Cooking'],
-  role: Role.ADMIN,
+  role: ADMIN,
 };
 
 let favActivities: (string | number)[];

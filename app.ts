@@ -1,24 +1,15 @@
-const combine = (
-  input1: number | string,
-  input2: number | string,
-  resultConvertion: 'as-number' | 'as-text'
-) => {
-  let result;
-  if (typeof input1 === 'number' && typeof input2 === 'number') {
-    result = input1 + input2;
-  } else {
-    result = input1.toString() + input2.toString();
-  }
+let userInput: unknown;
+let userName: string;
 
-  if (resultConvertion === 'as-number') {
-    return Number(result);
-  } else {
-    return result;
-  }
+userInput = 2;
+userInput = '22';
+
+if (userInput === 'string') {
+  userName = userInput;
+}
+
+const generateError = (message: string, code: number): never => {
+  throw { message, code };
 };
 
-const combinedAges = combine(36, 20, 'as-number');
-const combinedNames = combine('T', 'I', 'as-text');
-const combinedStringAges = combine('36', '20', 'as-text');
-
-console.log(combinedAges, combinedNames, combinedStringAges);
+generateError('Not found', 404);
