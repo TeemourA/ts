@@ -2,7 +2,7 @@ let userInput: unknown;
 let userName: string;
 
 userInput = 2;
-userInput = '22';
+userInput = '2';
 
 if (userInput === 'string') {
   userName = userInput;
