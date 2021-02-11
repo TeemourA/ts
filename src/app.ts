@@ -1,15 +1,32 @@
-let userInput: unknown;
-let userName: string;
+class Department {
+  // name: string;
+  // private readonly id: string;
+  private employees: string[] = [];
 
-userInput = 2;
-userInput = '2';
+  constructor(private readonly id: string, public name: string) {
+    // this.id = id;
+    // this.name = name;
+  }
 
-if (userInput === 'string') {
-  userName = userInput;
+  describe(this: Department) {
+    console.log(`Department ${this.id}: ${this.name}`);
+  }
+
+  addEmployee(employee: string) {
+    this.employees.push(employee);
+  }
+
+  printEmployeeInformation() {
+    console.log(this.employees, this.employees.length);
+  }
 }
 
-const generateError = (message: string, code: number): never => {
-  throw { message, code };
-};
+const accounting = new Department('d1', 'Accounting');
 
-generateError('Not found', 404);
+accounting.describe();
+
+// const accountingCopy = { name: 'dummy', describe: accounting.describe };
+
+// accountingCopy.describe();
+
+accounting.addEmployee('Tim');
