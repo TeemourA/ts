@@ -22,11 +22,34 @@ type Combinable = string | number;
 type Numeric = boolean | number;
 type Universal = Combinable & Numeric; // creates an intersection, not a union of unions
 
+// function add(a: number, b: number): number;  overload
+// function add(a: string, b: string): string;
+// function add(a: Combinable, b: Combinable) {
+//   if (typeof a === 'number' && typeof b === 'number') return a + b;
+
+//   return a.toString() + b.toString();
+// };
+
 const add = (a: Combinable, b: Combinable) => {
   if (typeof a === 'number' && typeof b === 'number') return a + b;
 
   return a.toString() + b.toString();
 };
+
+const word = add('a', 'b') as string;
+const num = add(5, 4) as number;
+
+const fetchedData = {
+  name: 'Acs',
+  id: '3',
+  job: { title: 'qwe', compane: 'ewq' },
+};
+
+console.log(fetchedData?.job?.title); // optional chaining
+
+const someData = null;
+const storedData = someData ?? 'DEFAULT'; // check if someData is null || undefined
+console.log(storedData);
 
 type UnknownEmployee = Employee | Admin;
 
@@ -119,7 +142,10 @@ const getAnimalSpeed = (animal: Animal) => {
 
 const horse: Horse = {
   type: 'horse',
-  groundSpeed: 23
-}
+  groundSpeed: 23,
+};
 
 getAnimalSpeed(horse);
+
+const userInput = document.getElementById('user-input') as HTMLInputElement;
+userInput.value = 'Hi there!';
