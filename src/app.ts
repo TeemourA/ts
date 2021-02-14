@@ -1,151 +1,59 @@
-type Admin = {
-  name: string;
-  privileges: string[];
+const names: Array<string> = []; // string[]
+
+const promise: Promise<string> = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Promise resolved!');
+  }, 2000);
+});
+
+promise.then(data => data.split(''));
+
+// generic function // named generic types to get TS support
+const mergeObjects = <T extends object, U extends object>(objA: T, objB: U) =>
+  Object.assign(objA, objB);
+
+console.log(mergeObjects({ name: 'x' }, { age: 25 }));
+
+interface Lengthy {
+  length: number;
+}
+
+const countAndDescribe = <T extends Lengthy>(element: T) => {
+  const description =
+    element.length >= 1
+      ? `Got ${element.length} element${element.length > 1 ? 's' : ''}.`
+      : 'Got no value';
+
+  return [element, description];
 };
+console.log(countAndDescribe('qweqeqewqeqe'));
 
-type Employee = {
-  name: string;
-  startDate: Date;
-};
+const extractAndConvet = <T extends object, U extends keyof T>(
+  obj: T,
+  key: U
+) => `Value ${obj[key]}`;
 
-// interface ElevatedEmployee extends Admin, Employee {}
+extractAndConvet({ name: 'qwerty' }, 'name');
 
-type ElevatedEmployee = Admin & Employee;
+class DataStorage<T extends string | number | boolean> { // kind of type variable 
+  protected data: T[] = [];
 
-const elevatedEmployee: ElevatedEmployee = {
-  name: 'Timo',
-  privileges: ['top1'],
-  startDate: new Date(),
-};
-
-type Combinable = string | number;
-type Numeric = boolean | number;
-type Universal = Combinable & Numeric; // creates an intersection, not a union of unions
-
-// function add(a: number, b: number): number;  overload
-// function add(a: string, b: string): string;
-// function add(a: Combinable, b: Combinable) {
-//   if (typeof a === 'number' && typeof b === 'number') return a + b;
-
-//   return a.toString() + b.toString();
-// };
-
-const add = (a: Combinable, b: Combinable) => {
-  if (typeof a === 'number' && typeof b === 'number') return a + b;
-
-  return a.toString() + b.toString();
-};
-
-const word = add('a', 'b') as string;
-const num = add(5, 4) as number;
-
-const fetchedData = {
-  name: 'Acs',
-  id: '3',
-  job: { title: 'qwe', compane: 'ewq' },
-};
-
-console.log(fetchedData?.job?.title); // optional chaining
-
-const someData = null;
-const storedData = someData ?? 'DEFAULT'; // check if someData is null || undefined
-console.log(storedData);
-
-type UnknownEmployee = Employee | Admin;
-
-const printEmployeeInfo = (emp: UnknownEmployee) => {
-  console.log('Name ' + emp.name);
-  if ('privileges' in emp) {
-    console.log('Priveleges ' + emp.privileges);
+  addItem(item: T) {
+    this.data.push(item);
   }
 
-  if ('startDate' in emp) {
-    console.log('Start date ' + emp.startDate);
+  removeItem(item: T) {
+    this.data.splice(this.data.indexOf(item), 1);
   }
-};
 
-printEmployeeInfo(elevatedEmployee);
-
-class Car {
-  drive() {
-    console.log('driving...');
+  getItems() {
+    return [...this.data];
   }
 }
 
-class Truck {
-  drive() {
-    console.log('driving a truck');
-  }
-
-  loadCargo(amount: number) {
-    console.log('Loading cargo ...' + amount);
-  }
-}
-
-type Vehicle = Car | Truck;
-
-const v1 = new Car();
-const v2 = new Truck();
-
-const useVehicle = (vehicle: Vehicle) => {
-  vehicle.drive();
-  if (vehicle instanceof Truck) {
-    vehicle.loadCargo(1000);
-  }
-};
-
-useVehicle(v1);
-useVehicle(v2);
-
-// interface City {
-//   name: string;
-//   population: number;
-// }
-
-// interface Cities {
-//   [name: string]: City;
-// }
-
-// const cities: Cities = {
-//   city1: {
-//     name: 'Moscow',
-//     population: 15,
-//   },
-//   city2: {
-//     name: 'NY',
-//     population: 15,
-//   },
-// };
-
-interface Horse {
-  type: 'horse';
-  groundSpeed: number;
-}
-
-interface Bird {
-  type: 'bird';
-  flyingSpeed: number;
-}
-
-type Animal = Horse | Bird;
-
-const getAnimalSpeed = (animal: Animal) => {
-  switch (animal.type) {
-    case 'horse':
-      console.log(animal.groundSpeed);
-      break;
-    case 'bird':
-      console.log(animal.flyingSpeed);
-      break;
-  }
-};
-
-const horse: Horse = {
-  type: 'horse',
-  groundSpeed: 23,
-};
-
-getAnimalSpeed(horse);
-
-const userInput = document.getElementById('user-input') as HTMLInputElement;
-userInput.value = 'Hi there!';
+const stringStorage = new DataStorage<string>();
+stringStorage.addItem('qwerty1');
+stringStorage.addItem('qwerty2');
+console.log(stringStorage.getItems());
+stringStorage.removeItem('qwerty1');
+console.log(stringStorage.getItems());
